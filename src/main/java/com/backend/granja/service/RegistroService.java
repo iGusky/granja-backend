@@ -2,7 +2,6 @@ package com.backend.granja.service;
 
 import java.util.List;
 
-import com.backend.granja.models.Dispositivo;
 import com.backend.granja.models.Registro;
 import com.backend.granja.repository.RegistroRepository;
 
@@ -20,7 +19,7 @@ public class RegistroService {
   public List<Registro> getAllRegistros(){
     return registroRepository.findAll();
   }
-  public List<Registro> getRegistrosFromDispositivo(Long id_dispositivo){
-    return registroRepository.findById_dispositivo(id_dispositivo);
-  }
+  // public List<Registro> getRegistrosFromDispositivo(Long id_dispositivo){
+  //   return registroRepository.findById_dispositivo(id_dispositivo);
+  // }
 }

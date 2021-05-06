@@ -18,7 +18,6 @@ public class Registro {
   private Long id_registro;
 
   private Date fecha;
-  @OneToOne
   private Long id_remitente;
   
   private String mensaje;
