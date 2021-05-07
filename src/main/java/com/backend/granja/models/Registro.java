@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +17,7 @@ public class Registro {
   private Long id_registro;
 
   private Date fecha;
-  @OneToOne
+  
   private Long id_remitente;
   
   private String mensaje;
