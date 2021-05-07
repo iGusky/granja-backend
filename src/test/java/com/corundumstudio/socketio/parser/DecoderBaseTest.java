@@ -13,21 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.corundumstudio.socketio.listener;
+package com.corundumstudio.socketio.parser;
 
-import com.corundumstudio.socketio.AckRequest;
-import com.corundumstudio.socketio.SocketIOClient;
+import mockit.Mocked;
 
-public interface DataListener<T> {
+import org.junit.Before;
 
-    /**
-     * Invokes when data object received from client
-     *
-     * @param client - receiver
-     * @param data - received object
-     * @param ackSender - ack request
-     *
-     */
-    void onData(SocketIOClient client, T data, AckRequest ackSender) throws Exception;
+import com.corundumstudio.socketio.ack.AckManager;
+import com.corundumstudio.socketio.protocol.JacksonJsonSupport;
+import com.corundumstudio.socketio.protocol.PacketDecoder;
+
+
+public class DecoderBaseTest {
+
+    @Mocked
+    protected AckManager ackManager;
+
+    protected PacketDecoder decoder;
+
+    @Before
+    public void before() {
+        decoder = new PacketDecoder(new JacksonJsonSupport(), ackManager);
+    }
 
 }

@@ -20,6 +20,7 @@ import com.corundumstudio.socketio.ack.AckManager;
 import com.corundumstudio.socketio.handler.ClientHead;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.base64.Base64;
 import io.netty.util.CharsetUtil;
@@ -89,16 +90,6 @@ public class PacketDecoder {
     private PacketType readInnerType(ByteBuf buffer) {
         int typeId = buffer.readByte() & 0xF;
         return PacketType.valueOfInner(typeId);
-    }
-
-    @Deprecated
-    public Packet decodePacket(String string, UUID uuid) throws IOException {
-        ByteBuf buf = Unpooled.copiedBuffer(string, CharsetUtil.UTF_8);
-        try {
-            return null;
-        } finally {
-            buf.release();
-        }
     }
 
     private boolean hasLengthHeader(ByteBuf buffer) {
@@ -309,22 +300,27 @@ public class PacketDecoder {
             }
         }
     }
-    
-    private String readNamespace(ByteBuf frame){
+
+    private String readNamespace(ByteBuf frame) {
+
         /**
          * namespace post request with url queryString, like
          *  /message?a=1,
          *  /message,
          */
-        int endIndex = frame.bytesBefore((byte)'?');
-        if(endIndex > 0){
-            return readString(frame,endIndex);
+        ByteBuf buffer = frame.slice();
+        // skip this frame
+        frame.readerIndex(frame.readerIndex() + frame.readableBytes());
+
+        int endIndex = buffer.bytesBefore((byte) '?');
+        if (endIndex > 0) {
+            return readString(buffer, endIndex);
         }
-        endIndex = frame.bytesBefore((byte)',');
-        if(endIndex > 0){
-            return readString(frame,endIndex);
+        endIndex = buffer.bytesBefore((byte) ',');
+        if (endIndex > 0) {
+            return readString(buffer, endIndex);
         }
-        return readString(frame);
+        return readString(buffer);
     }
 
 }

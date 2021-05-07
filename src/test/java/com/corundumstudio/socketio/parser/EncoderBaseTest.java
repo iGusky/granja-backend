@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.corundumstudio.socketio.transport;
+package com.corundumstudio.socketio.parser;
 
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import com.corundumstudio.socketio.Configuration;
+import com.corundumstudio.socketio.protocol.PacketEncoder;
+import com.corundumstudio.socketio.protocol.JacksonJsonSupport;
 
-import com.corundumstudio.socketio.Disconnectable;
+public class EncoderBaseTest {
 
-@Deprecated
-public abstract class BaseTransport extends ChannelInboundHandlerAdapter implements Disconnectable {
+    final PacketEncoder encoder = new PacketEncoder(new Configuration(), new JacksonJsonSupport());
 
 }
